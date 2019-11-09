@@ -21,6 +21,7 @@ setup(
     download_url='http://releases.llvm.org/download.html',
     description='pip installable clang-format',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
         'License :: OSI Approved :: BSD License',
