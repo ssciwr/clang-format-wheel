@@ -6,6 +6,8 @@
   * non-x86 linux
   * Windows
   * MacOS
+* Propose changes in mgevaert repository
+* Transition from TestPyPI to PyPI
 
 # Minor stuff
 
