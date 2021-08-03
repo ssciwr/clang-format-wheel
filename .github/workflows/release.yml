@@ -63,7 +63,7 @@ jobs:
       with:
         path: ./wheelhouse/*.whl
 
-  build_sdist:
+  build-sdist:
     name: Build source distribution
     runs-on: ubuntu-20.04
 
@@ -86,7 +86,7 @@ jobs:
 
   upload_pypi:
     name: Upload to PyPI
-    needs: [build_wheels, build_sdist]
+    needs: [build-wheels, build-sdist]
     runs-on: ubuntu-20.04
 
     steps:
