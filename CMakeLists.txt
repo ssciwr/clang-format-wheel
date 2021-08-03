@@ -34,5 +34,5 @@ endif()
 # Define an installation rule that copies the executable to our Python package
 install(
     PROGRAMS ${clang-format-executable}
-    DESTINATION clang-format/data/bin
+    DESTINATION clang_format/data/bin
 )

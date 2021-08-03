@@ -3,7 +3,7 @@ from skbuild import setup
 
 setup(
     name="clang-format",
-    version="0.0.5",
+    version="0.0.6",
     author="Dominic Kempf",
     author_email="ssc@iwr.uni-heidelberg.de",
     packages=["clang_format"],
