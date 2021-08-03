@@ -10,7 +10,7 @@ setup(
     zip_safe=False,
     entry_points={
         "console_scripts": [
-            "clang-format=clang-format:clang-format"
+            "clang-format=clang-format:clang_format"
         ]
     },
     classifiers=[
