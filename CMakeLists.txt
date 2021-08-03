@@ -4,11 +4,14 @@ cmake_minimum_required(VERSION 3.16)
 # Define a build rule clang-format
 include(ExternalProject)
 ExternalProject_add(build-clang-format
-  SOURCE_DIR ${CMAKE_SOURCE_DIR}/llvm-project/llvm
+  GIT_REPOSITORY https://github.com/llvm/llvm-project
+  GIT_TAG llvmorg-12.0.1
+  SOURCE_SUBDIR llvm
+  SOURCE_DIR ${CMAKE_BINARY_DIR}/llvm-project
   BINARY_DIR ${CMAKE_BINARY_DIR}/llvm
-  DOWNLOAD_COMMAND ""
   UPDATE_COMMAND ""
   INSTALL_COMMAND ""
+  USES_TERMINAL_DOWNLOAD 1
   USES_TERMINAL_CONFIGURE 1
   USES_TERMINAL_BUILD 1
   CMAKE_ARGS -DBUILD_SHARED_LIBS=OFF -DLLVM_ENABLE_PROJECTS=clang
