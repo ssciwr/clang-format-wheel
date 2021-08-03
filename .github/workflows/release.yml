@@ -50,6 +50,10 @@ jobs:
       env:
         CIBW_ARCHS: "${{ matrix.arch }}"
 
+    - name: Rename wheels to work with all Python3
+      run: |
+        rename 's|cp36|py3|g' ./wheelhouse/*.whl
+
     - uses: actions/upload-artifact@v2
       with:
         path: ./wheelhouse/*.whl
