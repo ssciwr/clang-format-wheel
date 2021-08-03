@@ -1,3 +1,5 @@
 include CMakeLists.txt
+include LICENSE.md
+include COPYING.md
 
 graft llvm-project

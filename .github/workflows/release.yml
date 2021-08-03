@@ -1,0 +1,55 @@
+name: Build + Release Wheels
+
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - published
+
+jobs:
+  build-wheels:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            arch: "x86_64"
+          # - os: ubuntu-20.04
+          #   arch: "i686"
+          # - os: ubuntu-20.04
+          #   arch: "aarch64"
+          # - os: ubuntu-20.04
+          #   arch: "ppc64le"
+          # - os: ubuntu-20.04
+          #   arch: "s390x"
+          # - os: windows-2016
+          #   arch: "AMD64"
+          - os: windows-2016
+            arch: "x86"
+          - os: macos-10.15
+            arch: "universal2"
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+    
+    - uses: actions/setup-python@v2
+      name: Install Python
+      with:
+        python-version: '3.7'
+    
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1.2.0
+      if: runner.os == 'Linux'
+
+    - name: Build wheels
+      uses: pypa/cibuildwheel@v2.0.1
+      env:
+        CIBW_ARCHS: "${{ matrix.arch }}"
+
+    - uses: actions/upload-artifact@v2
+      with:
+        path: ./wheelhouse/*.whl
