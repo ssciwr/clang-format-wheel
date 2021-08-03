@@ -1,10 +1,9 @@
 from skbuild import setup
-import versioneer
+
 
 setup(
     name="clang-format",
-    version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
+    version="0.0.1",
     author="Dominic Kempf",
     author_email="ssc@iwr.uni-heidelberg.de",
     packages=["clang-format"],
