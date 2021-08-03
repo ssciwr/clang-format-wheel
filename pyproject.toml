@@ -8,4 +8,4 @@ build-verbosity = 3
 # We restrict ourselves to CPython 3.6 and then repair the wheels to be
 # independent of the Python version - I have not found a different solution
 # within cibuildwheel to achieve this.
-build = "cp36-*"
+build = "cp38-*"
