@@ -26,10 +26,10 @@ jobs:
           #   arch: "s390x"
           # - os: windows-2016
           #   arch: "AMD64"
-          # - os: windows-2016
-          #   arch: "x86"
-          # - os: macos-10.15
-          #   arch: "universal2"
+          - os: windows-2016
+            arch: "x86"
+          - os: macos-10.15
+            arch: "universal2"
 
     steps:
     - uses: actions/checkout@v2
