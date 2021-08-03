@@ -17,8 +17,12 @@ setup(
     author='mgevaert',
     author_email='clang-format@gevaert.ca',
     packages=['clang_format'],
-    url='http://http://clang.llvm.org//',
+    url='http://clang.llvm.org/',
     download_url='http://releases.llvm.org/download.html',
+    project_urls={
+        'Documentation': 'https://clang.llvm.org/docs/ClangFormat.html',
+        'Source': 'https://github.com/mgevaert/clang-format-wheel',
+    },
     description='pip installable clang-format',
     long_description=long_description,
     long_description_content_type='text/markdown',
