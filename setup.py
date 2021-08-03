@@ -8,7 +8,7 @@ setup(
     author_email="ssc@iwr.uni-heidelberg.de",
     packages=["clang-format"],
     zip_safe=False,
-    entrypoints={
+    entry_points={
         "console_scripts": [
             "clang-format=clang-format:clang-format"
         ]
