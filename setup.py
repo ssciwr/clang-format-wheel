@@ -6,11 +6,11 @@ setup(
     version="0.0.5",
     author="Dominic Kempf",
     author_email="ssc@iwr.uni-heidelberg.de",
-    packages=["clang-format"],
+    packages=["clang_format"],
     zip_safe=False,
     entry_points={
         "console_scripts": [
-            "clang-format=clang-format:clang_format"
+            "clang-format=clang_format:clang_format"
         ]
     },
     classifiers=[
