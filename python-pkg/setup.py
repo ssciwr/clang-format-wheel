@@ -20,8 +20,8 @@ setup(
     url='http://clang.llvm.org/',
     download_url='http://releases.llvm.org/download.html',
     project_urls={
-        "Documentation": 'https://clang.llvm.org/docs/ClangFormat.html',
-        "Source Code": 'https://github.com/mgevaert/clang-format-wheel',
+        'Documentation': 'https://clang.llvm.org/docs/ClangFormat.html',
+        'Source': 'https://github.com/mgevaert/clang-format-wheel',
     },
     description='pip installable clang-format',
     long_description=long_description,
