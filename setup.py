@@ -9,13 +9,17 @@ setup(
     packages=["clang-format"],
     zip_safe=False,
     entrypoints={
-        "clang-format": [
+        "console_scripts": [
             "clang-format=clang-format:clang-format"
         ]
     },
     classifiers=[
-        "Programming Language :: Python :: 3",
+        "Programming Language :: C",
+        "Programming Language :: C++",
         "Operating System :: OS Independent",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: Apache Software License",
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Quality Assurance",
     ],
+    license="Apache 2.0"
 )
