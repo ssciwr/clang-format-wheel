@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-wheels:
-    name: Build wheels on ${{ matrix.os }}
+    name: Build wheels on ${{ matrix.os }} (arch=${{ matrix.arch }})
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -37,6 +37,7 @@ jobs:
         submodules: 'recursive'
     
     - name: Support long paths
+      if: matrix.os == 'Windows'
       run: git config --system core.longpaths true
 
     - uses: actions/setup-python@v2
