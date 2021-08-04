@@ -17,7 +17,7 @@ ExternalProject_add(build-clang-format
   CMAKE_ARGS -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DLLVM_ENABLE_PROJECTS=clang
   BUILD_COMMAND ${CMAKE_COMMAND} --build . --target clang-format
 )
-set(clang-format-executable ${CMAKE_BINARY_DIR}/llvm/bin/clang-format)
+set(clang-format-executable ${CMAKE_BINARY_DIR}/llvm/bin/clang-format${CMAKE_EXECUTABLE_SUFFIX})
 
 # Reduce the size of the executable by executing strip if it is present on the system
 find_program(STRIP_EXECUTABLE strip)
