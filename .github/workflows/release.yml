@@ -37,7 +37,7 @@ jobs:
         submodules: 'recursive'
     
     - name: Support long paths
-      if: matrix.os == 'Windows'
+      if: runner.os == 'Windows'
       run: git config --system core.longpaths true
 
     - uses: actions/setup-python@v2
