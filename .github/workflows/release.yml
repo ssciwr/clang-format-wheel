@@ -33,8 +33,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        submodules: 'recursive'
     
     - name: Support long paths
       if: runner.os == 'Windows'
@@ -76,8 +74,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          submodules: 'recursive'
 
       - uses: actions/setup-python@v2
         name: Install Python
@@ -90,10 +86,38 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           path: dist/*.tar.gz
+  
+  test-sdist:
+    name: Test build from source distribution
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        name: Install Python
+        with:
+          python-version: '3.8'
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: artifact
+          path: sdist
+
+      - name: Install from SDist
+        run: pip install sdist/*.tar.gz
+
+      - name: Install test requirements
+        run:
+          python -m pip install -r requirements-dev.txt
+
+      - name: Run test suite
+        run:
+          python -m pytest
 
   upload_pypi:
     name: Upload to PyPI
-    needs: [build-wheels, build-sdist]
+    needs: [build-wheels, build-sdist, test-sdist]
     runs-on: ubuntu-20.04
 
     steps:
