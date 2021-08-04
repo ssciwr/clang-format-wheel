@@ -33,6 +33,9 @@ endif()
 
 # Define an installation rule that copies the executable to our Python package
 install(
-    PROGRAMS ${clang-format-executable}
-    DESTINATION clang_format/data/bin
+  PROGRAMS
+    ${clang-format-executable}
+    ${CMAKE_BINARY_DIR}/llvm-project/clang/tools/clang-format/clang-format-diff.py
+    ${CMAKE_BINARY_DIR}/llvm-project/clang/tools/clang-format/git-clang-format
+  DESTINATION clang_format/data/bin
 )

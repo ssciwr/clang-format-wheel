@@ -10,7 +10,9 @@ setup(
     zip_safe=False,
     entry_points={
         "console_scripts": [
-            "clang-format=clang_format:clang_format"
+            "clang-format=clang_format:clang_format",
+            "git-clang-format=clang_format:git_clang_format",
+            "clang-format-diff.py=clang_format:clang_format_diff"
         ]
     },
     classifiers=[
