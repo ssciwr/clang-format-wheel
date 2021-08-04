@@ -36,6 +36,9 @@ jobs:
       with:
         submodules: 'recursive'
     
+    - name: Support long paths
+      run: git config --system core.longpaths true
+
     - uses: actions/setup-python@v2
       name: Install Python
       with:
