@@ -1,5 +1,17 @@
 from skbuild import setup
 
+import re
+
+
+# Read the clang-format version from the "single source of truth"
+def get_version():
+    with open("clang-format_version.cmake", "r") as version_file:
+        version_line = version_file.read()
+        match = re.match("set\(CLANG_FORMAT_VERSION (.*)\)", version_line)
+        if not match:
+            raise ValueError("Version File not readable")
+        return match.groups()[0]
+
 
 setup(
     name="clang-format",

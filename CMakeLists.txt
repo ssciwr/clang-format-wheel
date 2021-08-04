@@ -1,11 +1,14 @@
 project(clang-format-wheel)
 cmake_minimum_required(VERSION 3.16)
 
+# Include the "single source of truth" for the clang-format version
+include(clang-format_version.cmake)
+
 # Define a build rule clang-format
 include(ExternalProject)
 ExternalProject_add(build-clang-format
   GIT_REPOSITORY https://github.com/llvm/llvm-project
-  GIT_TAG llvmorg-12.0.1
+  GIT_TAG llvmorg-${CLANG_FORMAT_VERSION}
   SOURCE_SUBDIR llvm
   SOURCE_DIR ${CMAKE_BINARY_DIR}/llvm-project
   BINARY_DIR ${CMAKE_BINARY_DIR}/llvm
