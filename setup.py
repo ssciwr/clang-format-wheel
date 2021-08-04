@@ -13,6 +13,11 @@ def get_version():
         return match.groups()[0]
 
 
+# Parse the given README file
+with open("README.md", "r") as readme_file:
+    readme = readme_file.read()
+
+
 setup(
     name="clang-format",
     version="0.0.7",
@@ -27,6 +32,15 @@ setup(
             "clang-format-diff.py=clang_format:clang_format_diff"
         ]
     },
+    description="Clang-Format is an LLVM-based code formatting tool",
+    long_description=readme,
+    long_description_content_type="text/markdown",
+    url="http://clang.llvm.org/",
+    project_urls={
+        "Documentation": "https://clang.llvm.org/docs/ClangFormat.html",
+        "Source": "https://github.com/dokempf/clang-format-wheel"
+    },
+    download_url="https://github.com/llvm/llvm-project/releases",
     classifiers=[
         "Programming Language :: C",
         "Programming Language :: C++",
