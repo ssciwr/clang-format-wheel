@@ -119,6 +119,7 @@ jobs:
     name: Upload to PyPI
     needs: [build-wheels, build-sdist, test-sdist]
     runs-on: ubuntu-20.04
+    if: github.repository_owner == 'dokempf'
 
     steps:
       - uses: actions/download-artifact@v2
