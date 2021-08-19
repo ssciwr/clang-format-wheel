@@ -52,18 +52,6 @@ jobs:
       env:
         CIBW_ARCHS: "${{ matrix.arch }}"
 
-    - name: Rename wheels to work with all Python3
-      shell: python
-      run: |
-        import glob
-        import shutil
-        for wheel in glob.glob("wheelhouse/*.whl"):
-            parts = wheel.split("-")
-            parts[2] = "py3"
-            parts[3] = "none"
-            newwheel = "-".join(parts)
-            shutil.move(wheel, newwheel)
-
     - uses: actions/upload-artifact@v2
       with:
         path: ./wheelhouse/*.whl
