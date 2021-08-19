@@ -89,6 +89,7 @@ jobs:
   
   test-sdist:
     name: Test build from source distribution
+    needs: [build-sdist]
     runs-on: ubuntu-20.04
 
     steps:
@@ -105,7 +106,8 @@ jobs:
           path: sdist
 
       - name: Install from SDist
-        run: pip install sdist/*.tar.gz
+        run:
+          pip install sdist/*.tar.gz
 
       - name: Install test requirements
         run:
