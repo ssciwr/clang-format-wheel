@@ -2,6 +2,11 @@ name: Build + Release Wheels
 
 on:
   workflow_dispatch:
+    inputs:
+      llvm_version:
+        description: "LLVM version to build"
+        required: false
+        default: ""
   release:
     types:
       - published
@@ -42,6 +47,10 @@ jobs:
       name: Install Python
       with:
         python-version: '3.8'
+
+    - name: Override LLVM version
+      if: github.event.inputs.llvm_version
+      run: echo "set(CLANG_FORMAT_VERSION ${{ github.event.inputs.llvm_version }})" > clang-format_version.cmake
     
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1.2.0
