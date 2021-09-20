@@ -77,6 +77,10 @@ jobs:
         with:
           python-version: '3.8'
 
+      - name: Override LLVM version
+        if: github.event.inputs.llvm_version
+        run: echo "set(CLANG_FORMAT_VERSION ${{ github.event.inputs.llvm_version }})" > clang-format_version.cmake
+ 
       - name: Build SDist
         run: pipx run build --sdist
 
