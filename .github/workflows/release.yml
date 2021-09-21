@@ -12,7 +12,7 @@ on:
       - published
 
 env:
-  USE_QEMU: ${{ fromJSON(github.event.inputs.use_qemu || 'false') || (github.event.action == 'published') }}
+  USE_QEMU: ${{ (github.event.inputs.use_qemu == 'true') || (github.event.action == 'published') }}
 
 jobs:
   build-wheels:
