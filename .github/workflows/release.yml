@@ -2,9 +2,17 @@ name: Build + Release Wheels
 
 on:
   workflow_dispatch:
+    inputs:
+      use_qemu:
+        description: "Use qemu for builds with targets requiring emulation"
+        required: true
+        default: true
   release:
     types:
       - published
+
+env:
+  USE_QEMU: ${{ fromJSON(github.event.inputs.use_qemu) }} || (github.event_name == 'published')
 
 jobs:
   build-wheels:
@@ -16,43 +24,55 @@ jobs:
         include:
           - os: ubuntu-20.04
             arch: "x86_64"
+            use_qemu: false
           - os: ubuntu-20.04
             arch: "i686"
+            use_qemu: false
           - os: ubuntu-20.04
             arch: "aarch64"
+            use_qemu: true
           - os: ubuntu-20.04
             arch: "ppc64le"
+            use_qemu: true
           - os: ubuntu-20.04
             arch: "s390x"
+            use_qemu: true
           - os: windows-2016
             arch: "AMD64"
+            use_qemu: false
           - os: windows-2016
             arch: "x86"
+            use_qemu: false
           - os: macos-10.15
             arch: "universal2"
+            use_qemu: false
 
     steps:
     - uses: actions/checkout@v2
+      if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
     
     - name: Support long paths
-      if: runner.os == 'Windows'
+      if: runner.os == 'Windows' && ((!matrix.use_qemu) || fromJSON(env.USE_QEMU))
       run: git config --system core.longpaths true
 
     - uses: actions/setup-python@v2
       name: Install Python
+      if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
       with:
         python-version: '3.8'
     
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1.2.0
-      if: runner.os == 'Linux'
+      if: runner.os == 'Linux' && ((matrix.use_qemu) && fromJSON(env.USE_QEMU))
 
     - name: Build wheels
       uses: pypa/cibuildwheel@v2.0.1
+      if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
       env:
         CIBW_ARCHS: "${{ matrix.arch }}"
 
     - uses: actions/upload-artifact@v2
+      if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
       with:
         path: ./wheelhouse/*.whl
 
