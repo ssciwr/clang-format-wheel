@@ -48,7 +48,7 @@ jobs:
       with:
         python-version: '3.8'
 
-    - name: Override LLVM version
+    - name: Override LLVM version (${{ github.event.inputs.llvm_version }})
       if: github.event.inputs.llvm_version
       run: echo "set(CLANG_FORMAT_VERSION ${{ github.event.inputs.llvm_version }})" > clang-format_version.cmake
     
@@ -77,7 +77,7 @@ jobs:
         with:
           python-version: '3.8'
 
-      - name: Override LLVM version
+      - name: Override LLVM version (${{ github.event.inputs.llvm_version }})
         if: github.event.inputs.llvm_version
         run: echo "set(CLANG_FORMAT_VERSION ${{ github.event.inputs.llvm_version }})" > clang-format_version.cmake
  
