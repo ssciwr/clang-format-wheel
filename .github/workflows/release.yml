@@ -37,18 +37,13 @@ jobs:
     - name: Support long paths
       if: runner.os == 'Windows'
       run: git config --system core.longpaths true
-
-    - uses: actions/setup-python@v2
-      name: Install Python
-      with:
-        python-version: '3.8'
     
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1.2.0
       if: runner.os == 'Linux'
 
     - name: Build wheels
-      uses: pypa/cibuildwheel@v2.0.1
+      uses: pypa/cibuildwheel@v2.1.2
       env:
         CIBW_ARCHS: "${{ matrix.arch }}"
 
@@ -62,11 +57,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - uses: actions/setup-python@v2
-        name: Install Python
-        with:
-          python-version: '3.8'
 
       - name: Build SDist
         run: pipx run build --sdist
@@ -86,7 +76,7 @@ jobs:
       - uses: actions/setup-python@v2
         name: Install Python
         with:
-          python-version: '3.8'
+          python-version: '3.9'
 
       - uses: actions/download-artifact@v2
         with:
