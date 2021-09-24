@@ -5,7 +5,7 @@ requires = ["setuptools>=42", "wheel", "scikit-build"]
 # Super-verbose output for debugging purpose
 build-verbosity = 3
 
-# We restrict ourselves to CPython 3.6 and then repair the wheels to be
+# We restrict ourselves to CPython 3.8 and then repair the wheels to be
 # independent of the Python version - I have not found a different solution
 # within cibuildwheel to achieve this.
 build = "cp38-*"
