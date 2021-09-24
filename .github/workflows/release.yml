@@ -7,6 +7,10 @@ on:
         description: "Use qemu for builds with targets requiring emulation"
         required: true
         default: true
+      llvm_version:
+        description: "LLVM version to build"
+        required: false
+        default: ""
   release:
     types:
       - published
@@ -55,18 +59,16 @@ jobs:
       if: runner.os == 'Windows' && ((!matrix.use_qemu) || fromJSON(env.USE_QEMU))
       run: git config --system core.longpaths true
 
-    - uses: actions/setup-python@v2
-      name: Install Python
-      if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
-      with:
-        python-version: '3.8'
-    
+    - name: Override LLVM version (${{ github.event.inputs.llvm_version }})
+      if: github.event.inputs.llvm_version
+      run: echo "set(CLANG_FORMAT_VERSION ${{ github.event.inputs.llvm_version }})" > clang-format_version.cmake
+
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1.2.0
       if: runner.os == 'Linux' && ((matrix.use_qemu) && fromJSON(env.USE_QEMU))
 
     - name: Build wheels
-      uses: pypa/cibuildwheel@v2.0.1
+      uses: pypa/cibuildwheel@v2.1.2
       if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
       env:
         CIBW_ARCHS: "${{ matrix.arch }}"
@@ -83,11 +85,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-python@v2
-        name: Install Python
-        with:
-          python-version: '3.8'
-
+      - name: Override LLVM version (${{ github.event.inputs.llvm_version }})
+        if: github.event.inputs.llvm_version
+        run: echo "set(CLANG_FORMAT_VERSION ${{ github.event.inputs.llvm_version }})" > clang-format_version.cmake
+ 
       - name: Build SDist
         run: pipx run build --sdist
 
@@ -106,7 +107,7 @@ jobs:
       - uses: actions/setup-python@v2
         name: Install Python
         with:
-          python-version: '3.8'
+          python-version: '3.9'
 
       - uses: actions/download-artifact@v2
         with:
