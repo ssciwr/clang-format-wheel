@@ -1,4 +1,4 @@
-Copyright 2021 Dominic Kempf, Heidelberg University
+Copyright 2021 Dominic Kempf, Heidelberg University and contributors
 
 Some parts of this project are heavily inspired by the packaging of
 Ninja provided by scikit-build under the Apache 2.0 license. The list
