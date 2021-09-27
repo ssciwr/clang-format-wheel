@@ -55,7 +55,7 @@ setup(
     url="http://clang.llvm.org/",
     project_urls={
         "Documentation": "https://clang.llvm.org/docs/ClangFormat.html",
-        "Source": "https://github.com/dokempf/clang-format-wheel"
+        "Source": "https://github.com/ssciwr/clang-format-wheel"
     },
     download_url="https://github.com/llvm/llvm-project/releases",
     classifiers=[
