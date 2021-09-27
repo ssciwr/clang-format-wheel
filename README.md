@@ -3,7 +3,7 @@
 [![PyPI Release](https://img.shields.io/pypi/v/clang-format.svg)](https://pypi.org/project/clang-format)
 [![Documentation Status](https://readthedocs.org/projects/clang-format-wheel/badge/?version=latest)](https://clang-format-wheel.readthedocs.io/en/latest/?badge=latest)
 
-This project packages the `clang-format` utility as a Python packages. It allows you to install `clang-format` directly from PyPI:
+This project packages the `clang-format` utility as a Python package. It allows you to install `clang-format` directly from PyPI:
 
 ```
 python -m pip install clang-format
@@ -31,8 +31,9 @@ This repository extends the great work of several other projects:
 
 * `clang-format` itself is [provided by the LLVM project](https://github.com/llvm/llvm-project) under the Apache 2.0 license with exceptions.
 * The build logic is based on [scikit-build](https://github.com/scikit-build/scikit-build) which greatly reduces the amount of low level code necessary to package `clang-format`.
+* The `scikit-build` packaging examples of [CMake](https://github.com/scikit-build/cmake-python-distributions) and [Ninja](https://github.com/scikit-build/ninja-python-distributions) were very helpful in packaging `clang-format`.
 * The CI build process is controlled by [cibuildwheel](https://github.com/pypa/cibuildwheel) which makes building wheels across a number of platforms a pleasant experience (!)
 
-Special thanks goes to @mgevaert who initiated this project and maintained it until 2021.
+Special thanks goes to mgevaert who initiated this project and maintained it until 2021.
 
 We are grateful for the generous provisioning with CI resources that GitHub currently offers to Open Source projects.
