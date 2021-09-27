@@ -1,0 +1,6 @@
+include clang-format_version.cmake
+include CMakeLists.txt
+include LICENSE.md
+include COPYING.md
+include README.md
+include pyproject.toml
