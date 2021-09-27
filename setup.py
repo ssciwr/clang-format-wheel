@@ -17,11 +17,16 @@ class genericpy_bdist_wheel(_bdist_wheel):
 # Read the clang-format version from the "single source of truth"
 def get_version():
     with open("clang-format_version.cmake", "r") as version_file:
-        version_line = version_file.read()
-        match = re.match("set\(CLANG_FORMAT_VERSION (.*)\)", version_line)
-        if not match:
-            raise ValueError("Version File not readable")
-        return match.groups()[0]
+        parsed = {}
+        for line in version_file:
+            match = re.match("set\((.*) (.*)\)", line)
+            if len(match.groups()) != 2:
+                raise ValueError("Version File not readable")
+            parsed[match.groups()[0]] = match.groups()[1]
+        if parsed['CLANG_FORMAT_WHEEL_VERSION'] == "0":
+            return f"{parsed['CLANG_FORMAT_VERSION']}"
+        else:
+            return f"{parsed['CLANG_FORMAT_VERSION']}.{parsed['CLANG_FORMAT_WHEEL_VERSION']}"
 
 
 # Parse the given README file
@@ -31,7 +36,7 @@ with open("README.md", "r") as readme_file:
 cmdclass = {"bdist_wheel": genericpy_bdist_wheel}
 setup(
     name="clang-format",
-    version="0.0.7",
+    version=get_version(),
     cmdclass=cmdclass,
     author="Dominic Kempf",
     author_email="ssc@iwr.uni-heidelberg.de",

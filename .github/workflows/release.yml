@@ -11,6 +11,10 @@ on:
         description: "LLVM version to build"
         required: false
         default: ""
+      wheel_version:
+        description: "Version of the wheel packaging (appended to LLVM version)"
+        required: false
+        default: "0"
   release:
     types:
       - published
@@ -61,7 +65,9 @@ jobs:
 
     - name: Override LLVM version (${{ github.event.inputs.llvm_version }})
       if: github.event.inputs.llvm_version
-      run: echo "set(CLANG_FORMAT_VERSION ${{ github.event.inputs.llvm_version }})" > clang-format_version.cmake
+      run: |
+        echo "set(CLANG_FORMAT_VERSION ${{ github.event.inputs.llvm_version }})" > clang-format_version.cmake
+        echo "set(CLANG_FORMAT_WHEEL_VERSION ${{ github.event.inputs.wheel_version }})" >> clang-format_version.cmake
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1.2.0
@@ -87,7 +93,9 @@ jobs:
 
       - name: Override LLVM version (${{ github.event.inputs.llvm_version }})
         if: github.event.inputs.llvm_version
-        run: echo "set(CLANG_FORMAT_VERSION ${{ github.event.inputs.llvm_version }})" > clang-format_version.cmake
+        run: |
+          echo "set(CLANG_FORMAT_VERSION ${{ github.event.inputs.llvm_version }})" > clang-format_version.cmake
+          echo "set(CLANG_FORMAT_WHEEL_VERSION ${{ github.event.inputs.wheel_version }})" >> clang-format_version.cmake
  
       - name: Build SDist
         run: pipx run build --sdist
