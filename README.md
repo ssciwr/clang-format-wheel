@@ -1,7 +1,6 @@
 # clang-format Python distribution
 
 [![PyPI Release](https://img.shields.io/pypi/v/clang-format.svg)](https://pypi.org/project/clang-format)
-[![Documentation Status](https://readthedocs.org/projects/clang-format-wheel/badge/?version=latest)](https://clang-format-wheel.readthedocs.io/en/latest/?badge=latest)
 
 This project packages the `clang-format` utility as a Python package. It allows you to install `clang-format` directly from PyPI:
 
