@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=42", "wheel", "scikit-build"]
+requires = ["setuptools>=42", "wheel", "scikit-build", "ninja"]
 
 [tool.cibuildwheel]
 # Super-verbose output for debugging purpose
