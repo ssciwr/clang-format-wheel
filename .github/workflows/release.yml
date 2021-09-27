@@ -8,7 +8,7 @@ on:
         required: false
         default: ""
       wheel_version:
-        description: "Versioning of the wheel packaging (appended to LLVM version)"
+        description: "Version of the wheel packaging (appended to LLVM version)"
         required: false
         default: "0"
   release:

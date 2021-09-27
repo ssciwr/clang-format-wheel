@@ -23,8 +23,10 @@ def get_version():
             if len(match.groups()) != 2:
                 raise ValueError("Version File not readable")
             parsed[match.groups()[0]] = match.groups()[1]
-
-        return f"{parsed['CLANG_FORMAT_VERSION']}.{parsed['CLANG_FORMAT_WHEEL_VERSION']}"
+        if parsed['CLANG_FORMAT_WHEEL_VERSION'] == "0":
+            return f"{parsed['CLANG_FORMAT_VERSION']}"
+        else:
+            return f"{parsed['CLANG_FORMAT_VERSION']}.{parsed['CLANG_FORMAT_WHEEL_VERSION']}"
 
 
 # Parse the given README file
