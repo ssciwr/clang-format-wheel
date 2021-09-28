@@ -10,6 +10,17 @@ python -m pip install clang-format
 
 This projects intends to release a new PyPI package for each major and minor release of `clang-format`.
 
+## Use from pre-commit
+
+A [pre-commit](https://pre-commit.com) hook is also [provided](https://github.com/ssciwr/clang-format-precommit), use like this:
+
+```yaml
+- repo: https://github.com/ssciwr/clang-format-precommit
+  rev: v12.0.1
+  hooks:
+  - id: clang-format
+```
+
 ## Building new releases
 
 The [clang-format-wheel repository](https://github.com/ssciwr/clang-format-wheel) provides the build logic to build and publish binary wheels of the `clang-format` utility.
