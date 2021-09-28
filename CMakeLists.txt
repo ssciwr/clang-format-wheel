@@ -3,12 +3,13 @@ cmake_minimum_required(VERSION 3.16)
 
 # Include the "single source of truth" for the clang-format version
 include(clang-format_version.cmake)
+string(REPLACE "-" "" CLANG_FORMAT_VERSION_SHORT "${CLANG_FORMAT_VERSION}")
 
 # Define a build rule clang-format
+set(LLVM_DOWNLOAD_URL "https://github.com/llvm/llvm-project/releases/download/llvmorg-${CLANG_FORMAT_VERSION}/llvm-project-${CLANG_FORMAT_VERSION_SHORT}.src.tar.xz")
 include(ExternalProject)
 ExternalProject_add(build-clang-format
-  GIT_REPOSITORY https://github.com/llvm/llvm-project
-  GIT_TAG llvmorg-${CLANG_FORMAT_VERSION}
+  URL "${LLVM_DOWNLOAD_URL}"
   SOURCE_SUBDIR llvm
   SOURCE_DIR ${CMAKE_BINARY_DIR}/llvm-project
   BINARY_DIR ${CMAKE_BINARY_DIR}/llvm
