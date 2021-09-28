@@ -10,9 +10,9 @@ python -m pip install clang-format
 
 This projects intends to release a new PyPI package for each major and minor release of `clang-format`.
 
-## Use from pipx
+## Use with pipx
 
-You can use `pipx` to use clang-format, as well. For example, `pipx run clang-format <args>` will run clang-format without any previous setup on any machine with pipx (including all default GitHub Actions / Azure runners, avoiding requiring a pre-install step or even `actions/setup-python`).
+You can use `pipx` to run clang-format, as well. For example, `pipx run clang-format <args>` will run clang-format without any previous install required on any machine with pipx (including all default GitHub Actions / Azure runners, avoiding requiring a pre-install step or even `actions/setup-python`).
 
 ## Use from pre-commit
 
