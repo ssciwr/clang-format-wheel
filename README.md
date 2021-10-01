@@ -25,7 +25,7 @@ A [pre-commit](https://pre-commit.com) hook is also [provided](https://github.co
   - id: clang-format
 ```
 
-In contrast to many other pre-commit hooks, the versioning of hook matches the versioning of `clang-format`.
+In contrast to many other pre-commit hooks, the versioning of the hook matches the versioning of `clang-format`.
 You can choose any released minor version of LLVM >= 10.
 
 ## Building new releases
