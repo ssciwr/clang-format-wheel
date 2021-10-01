@@ -20,7 +20,7 @@ A [pre-commit](https://pre-commit.com) hook is also [provided](https://github.co
 
 ```yaml
 - repo: https://github.com/ssciwr/clang-format-precommit
-  rev: v12.0.1
+  rev: v13.0.0
   hooks:
   - id: clang-format
 ```
