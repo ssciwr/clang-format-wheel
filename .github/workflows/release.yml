@@ -15,6 +15,10 @@ on:
         description: "Version of the wheel packaging (appended to LLVM version)"
         required: false
         default: "0"
+      deploy_to_testpypi:
+        description: "Whether the build should be deployed to test.pypi.org instead regular PyPI"
+        required: true
+        default: false
   release:
     types:
       - published
@@ -148,6 +152,15 @@ jobs:
 
       - name: Upload to PyPI
         uses: pypa/gh-action-pypi-publish@v1.4.2
+        if: github.event.inputs.deploy_to_testpypi == 'false'
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
+
+      - name: Upload to TestPyPI
+        uses: pypa/gh-action-pypi-publish@v1.4.2
+        if: github.event.inputs.deploy_to_testpypi == 'true'
+        with:
+          user: __token__
+          password: ${{ secrets.TESTPYPI_API_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
