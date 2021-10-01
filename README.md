@@ -39,6 +39,7 @@ On manual triggers, the following input variables are available:
 * `use_qemu`: Whether to build targets that require emulation (default: `true`)
 * `llvm_version`: Override the LLVM version (default: `""`)
 * `wheel_version`: Override the wheel packaging version (default `"0"`)
+* `deploy_to_testpypi`: Whether to deploy to TestPyPI instead of PyPI (default: `false`)
 
 ## Acknowledgments
 
