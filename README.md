@@ -33,7 +33,7 @@ In order to add a new release, the following steps are necessary:
 
 * Edit the [version file](https://github.com/ssciwr/clang-format-wheel/blob/main/clang-format_version.cmake) to reflect the new version.
 * Make a GitHub release to trigger the [GitHub Actions release workflow](https://github.com/ssciwr/clang-format-wheel/actions/workflows/release.yml). Alternatively, the workflow can be triggered manually.
-* Update and tag a new version for the [clang-format-hook](https://github.com/ssciwr/clang-format-hook) hook.
+* Update and tag a new version for [clang-format-hook](https://github.com/ssciwr/clang-format-hook).
 
 On manual triggers, the following input variables are available:
 * `use_qemu`: Whether to build targets that require emulation (default: `true`)
