@@ -1,19 +1,20 @@
 import os
+import subprocess
 import sys
 
 
 def _run(name):
-    executable = os.path.join(os.path.split(__file__)[0], "data", "bin", name)
-    return os.execv(executable, [name] + sys.argv[1:])
+    executable = os.path.join(os.path.dirname(__file__), "data", "bin", name)
+    return subprocess.call([executable] + sys.argv[1:])
 
 
 def clang_format():
-    return _run("clang-format")
+    raise SystemExit(_run("clang-format"))
 
 
 def clang_format_diff():
-    return _run("clang-format-diff.py")
+    raise SystemExit(_run("clang-format-diff.py"))
 
 
 def git_clang_format():
-    return _run("git-clang-format")
+    raise SystemExit(_run("git-clang-format"))
