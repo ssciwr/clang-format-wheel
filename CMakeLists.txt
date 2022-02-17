@@ -6,7 +6,7 @@ include(clang-format_version.cmake)
 string(REPLACE "-" "" CLANG_FORMAT_VERSION_SHORT "${CLANG_FORMAT_VERSION}")
 
 # Define a build rule clang-format
-set(LLVM_DOWNLOAD_URL "https://github.com/llvm/llvm-project/releases/download/llvmorg-${CLANG_FORMAT_VERSION}/llvm-project-${CLANG_FORMAT_VERSION_SHORT}.src.tar.xz")
+set(LLVM_DOWNLOAD_URL "https://github.com/llvm/llvm-project/releases/download/llvmorg-${CLANG_FORMAT_VERSION}/llvm-project-${CLANG_FORMAT_VERSION_SHORT}.tar.xz")
 include(ExternalProject)
 ExternalProject_add(build-clang-format
   URL "${LLVM_DOWNLOAD_URL}"
