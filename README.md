@@ -27,7 +27,10 @@ A [pre-commit](https://pre-commit.com) hook is also [provided](https://github.co
 ```
 
 In contrast to many other pre-commit hooks, the versioning of the hook matches the versioning of `clang-format`.
-You can choose any released minor version of LLVM >= 10.
+
+If you are required to stick with a given major/minor version of `clang-format` with your pre-commit-hook, you can use [this alternative hook repository](https://github.com/ssciwr/clang-format-hook) that also receives backports of older versions of clang-format.
+Currently, all major/minor versions of LLVM >= 10 are supported.
+It is best to subscribe to releases of the hook repository to get notified of new backport releases, as `pre-commit`'s auto-upgrade functionality will not work in that case.
 
 ## Building new releases
 
