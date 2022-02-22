@@ -23,6 +23,7 @@ A [pre-commit](https://pre-commit.com) hook is also [provided](https://github.co
   rev: v13.0.1
   hooks:
   - id: clang-format
+    types_or: [c++, c, cuda]
 ```
 
 In contrast to many other pre-commit hooks, the versioning of the hook matches the versioning of `clang-format`.
