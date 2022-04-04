@@ -9,3 +9,7 @@ build-verbosity = 3
 # independent of the Python version - I have not found a different solution
 # within cibuildwheel to achieve this.
 build = "cp38-*"
+
+# Testing commands for our wheels
+test-requires = "pytest"
+test-command = "pytest"
