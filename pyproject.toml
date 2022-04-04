@@ -12,4 +12,4 @@ build = "cp38-*"
 
 # Testing commands for our wheels
 test-requires = "pytest"
-test-command = "pytest"
+test-command = "pytest {package}/test"
