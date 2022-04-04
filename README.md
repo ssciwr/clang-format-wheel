@@ -20,7 +20,7 @@ A [pre-commit](https://pre-commit.com) hook is also [provided](https://github.co
 
 ```yaml
 - repo: https://github.com/pre-commit/mirrors-clang-format
-  rev: v13.0.1
+  rev: v14.0.0
   hooks:
   - id: clang-format
     types_or: [c++, c, cuda]
