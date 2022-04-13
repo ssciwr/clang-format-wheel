@@ -19,12 +19,9 @@ on:
         description: "Whether the build should be deployed to test.pypi.org instead regular PyPI"
         required: true
         default: false
-  release:
-    types:
-      - published
 
 env:
-  USE_QEMU: ${{ (github.event.inputs.use_qemu == 'true') || (github.event.action == 'published') }}
+  USE_QEMU: ${{ github.event.inputs.use_qemu == 'true' }}
 
 jobs:
   build-wheels:
