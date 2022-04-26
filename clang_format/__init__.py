@@ -11,10 +11,10 @@ def _run(name):
     return subprocess.call([executable] + sys.argv[1:])
 
 def _run_python(name):
-    executable = _get_executable(name)
+    script = _get_executable(name)
     # as MS Windows is not able to run Python scripts directly by name,
     # we have to call the interpreter and pass the script as parameter
-    return subprocess.call([sys.executable, executable] + sys.argv[1:])
+    return subprocess.call([sys.executable, script] + sys.argv[1:])
 
 
 def clang_format():
