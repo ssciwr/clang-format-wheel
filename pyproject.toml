@@ -11,5 +11,9 @@ build-verbosity = 3
 build = "cp38-*"
 
 # Testing commands for our wheels
-test-requires = "pytest"
+before-test = [
+    "git config --global user.name Name",
+    "git config --global user.email foo@bar.com"
+]
+test-requires = ["pytest", "pytest-git"]
 test-command = "pytest {package}/test"

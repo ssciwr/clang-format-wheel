@@ -15,7 +15,20 @@ def test_clang_format(testcase):
     with tempfile.TemporaryDirectory() as tmp:
         outname = os.path.join(tmp, "formatted")
         with open(outname, "w") as out:
-            subprocess.run(["clang-format", test_input], stdout=out)
+            subprocess.run(["clang-format", test_input], stdout=out, check=True)
 
         # Check that the content is equal
         assert filecmp.cmp(outname, test_output)
+
+
+def test_git_clang_format(git_repo):
+    # Test whether the git-clang-format tool is properly executable
+    # on an empty git repository.
+
+    # Create a commit with an empty file
+    open(os.path.join(git_repo.workspace, "test"), "w").close()
+    git_repo.run("git add test")
+    git_repo.run("git commit -m initial")
+
+    # Check that the clang-format tool runs on the test repo
+    git_repo.run("git clang-format")
