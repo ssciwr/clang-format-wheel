@@ -21,9 +21,20 @@ def test_clang_format(testcase):
         assert filecmp.cmp(outname, test_output)
 
 
-def test_git_clang_format():
+def test_git_clang_format(monkeypatch, tmp_path):
     # Test whether the git-clang-format tool is properly executable
     # on an empty git repository.
-    with tempfile.TemporaryDirectory() as tmp:
-        subprocess.run("git init".split())
-        subprocess.run("git clang-format".split(), check=True)
+
+    # Change the current working directory to a temporary one
+    monkeypatch.chdir(tmp_path)
+
+    # Initialize an empty git repository
+    subprocess.run(["git", "init"])
+
+    # Create a commit with an empty file
+    open("test").close()
+    subprocess.run(["git", "add", "test"])
+    subprocess.run(["git", "commit", "-m", "Initial Commit"])
+
+    # Check that the clang-format tool runs on the test repo
+    subprocess.run(["git", "clang-format"], check=True)
