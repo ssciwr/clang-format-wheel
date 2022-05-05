@@ -28,7 +28,7 @@ def test_git_clang_format(git_repo):
     # Create a commit with an empty file
     open(os.path.join(git_repo.workspace, "test"), "w").close()
     git_repo.run("git add test")
-    git_repo.run("git commit -m 'Initial Commit'")
+    git_repo.run("git commit -m initial")
 
     # Check that the clang-format tool runs on the test repo
     git_repo.run("git clang-format")
