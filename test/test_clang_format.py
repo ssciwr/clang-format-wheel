@@ -32,7 +32,7 @@ def test_git_clang_format(monkeypatch, tmp_path):
     subprocess.run(["git", "init"])
 
     # Create a commit with an empty file
-    open("test").close()
+    open("test", "w").close()
     subprocess.run(["git", "add", "test"])
     subprocess.run(["git", "commit", "-m", "Initial Commit"])
 
