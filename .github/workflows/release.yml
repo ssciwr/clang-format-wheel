@@ -71,11 +71,11 @@ jobs:
         echo "set(CLANG_FORMAT_WHEEL_VERSION ${{ github.event.inputs.wheel_version }})" >> clang-format_version.cmake
 
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1.2.0
+      uses: docker/setup-qemu-action@v2.0.0
       if: runner.os == 'Linux' && ((matrix.use_qemu) && fromJSON(env.USE_QEMU))
 
     - name: Build wheels
-      uses: pypa/cibuildwheel@v2.1.2
+      uses: pypa/cibuildwheel@v2.7.0
       if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
       env:
         CIBW_ARCHS: "${{ matrix.arch }}"
@@ -153,14 +153,14 @@ jobs:
           path: dist
 
       - name: Upload to PyPI
-        uses: pypa/gh-action-pypi-publish@v1.4.2
+        uses: pypa/gh-action-pypi-publish@v1.5.0
         if: github.event.inputs.deploy_to_testpypi == 'false'
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
 
       - name: Upload to TestPyPI
-        uses: pypa/gh-action-pypi-publish@v1.4.2
+        uses: pypa/gh-action-pypi-publish@v1.5.0
         if: github.event.inputs.deploy_to_testpypi == 'true'
         with:
           user: __token__
