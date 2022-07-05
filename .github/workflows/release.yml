@@ -57,7 +57,7 @@ jobs:
             use_qemu: false
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
     
     - name: Support long paths
@@ -90,7 +90,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Override LLVM version (${{ github.event.inputs.llvm_version }})
         if: github.event.inputs.llvm_version
@@ -111,7 +111,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - uses: actions/setup-python@v2
         name: Install Python
