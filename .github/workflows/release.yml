@@ -118,7 +118,7 @@ jobs:
         with:
           python-version: '3.9'
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: artifact
           path: sdist
@@ -147,7 +147,7 @@ jobs:
     if: github.repository_owner == 'ssciwr'
 
     steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: artifact
           path: dist
