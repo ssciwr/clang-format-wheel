@@ -71,7 +71,7 @@ jobs:
         echo "set(CLANG_FORMAT_WHEEL_VERSION ${{ github.event.inputs.wheel_version }})" >> clang-format_version.cmake
 
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v2.0.0
+      uses: docker/setup-qemu-action@v2.1.0
       if: runner.os == 'Linux' && ((matrix.use_qemu) && fromJSON(env.USE_QEMU))
 
     - name: Build wheels
