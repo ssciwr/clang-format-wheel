@@ -17,6 +17,3 @@ before-test = [
 ]
 test-requires = ["pytest", "pytest-git"]
 test-command = "pytest {package}/test"
-
-[tool.cibuildwheel.macos]
-repair-wheel-command = ""
