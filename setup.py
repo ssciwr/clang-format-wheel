@@ -3,6 +3,7 @@ from wheel.bdist_wheel import bdist_wheel as _bdist_wheel
 from skbuild import setup
 
 import re
+import os
 
 class genericpy_bdist_wheel(_bdist_wheel):
     def finalize_options(self):
@@ -28,6 +29,13 @@ def get_version():
         else:
             return f"{parsed['CLANG_FORMAT_VERSION']}.{parsed['CLANG_FORMAT_WHEEL_VERSION']}"
 
+def get_cmake_args_from_env():
+    cmake_args = []
+    for cmake_arg in ["CMAKE_OSX_ARCHITECTURES"]:
+        cmake_arg_value = os.environ.get(cmake_arg)
+        if cmake_arg_value:
+            cmake_args.append(f"-D{cmake_arg}={cmake_arg_value}")
+    return cmake_args
 
 # Parse the given README file
 with open("README.md", "r") as readme_file:
@@ -66,5 +74,6 @@ setup(
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Quality Assurance",
     ],
-    license="Apache 2.0"
+    license="Apache 2.0",
+    cmake_args=get_cmake_args_from_env(),
 )
