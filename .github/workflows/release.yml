@@ -161,14 +161,14 @@ jobs:
           path: dist
 
       - name: Upload to PyPI
-        uses: pypa/gh-action-pypi-publish@v1.5.1
+        uses: pypa/gh-action-pypi-publish@v1.5.2
         if: github.event.inputs.deploy_to_testpypi == 'false'
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
 
       - name: Upload to TestPyPI
-        uses: pypa/gh-action-pypi-publish@v1.5.1
+        uses: pypa/gh-action-pypi-publish@v1.5.2
         if: github.event.inputs.deploy_to_testpypi == 'true'
         with:
           user: __token__
