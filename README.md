@@ -49,7 +49,7 @@ On manual triggers, the following input variables are available:
 
 The repository with the precommit hook is automatically updated using a scheduled Github Actions workflow.
 
-## Acknowledgments
+## Acknowledgements
 
 This repository extends the great work of several other projects:
 
