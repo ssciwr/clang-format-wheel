@@ -1,0 +1,12 @@
+---
+- id: clang-format
+  name: clang-format
+  description: ""
+  entry: clang-format -i
+  language: python
+  types_or:
+    [c++, c, c#, cuda, java, javascript, json, objective-c, proto, textproto]
+  args: ["-style=file"]
+  require_serial: false
+  additional_dependencies: []
+  minimum_pre_commit_version: "2.9.2"
