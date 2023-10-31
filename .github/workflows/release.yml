@@ -52,15 +52,15 @@ jobs:
             arch: "x86"
             use_qemu: false
             skip: ""
-          # note for future reference: why not separate x86_64 / arm64 macos builds?
-          # - building clang-format involves building llvm-tblgen and clang-tblgen binaries
-          # - these binaries are then executed as part of the build process
-          # - if we build for arm64 on an intel cpu it cannot execute these binaries and the build fails
           - os: macos-11
-            arch: "universal2"
+            arch: "x86_64"
             use_qemu: false
             skip: ""
-            cmake_osx_architectures: "x86_64;arm64"
+            # SSC self-hosted mac arm64 runner
+          - os: macos-arm64-ssc
+            arch: "arm64"
+            use_qemu: false
+            skip: ""
 
     steps:
     - uses: actions/checkout@v4
@@ -86,7 +86,6 @@ jobs:
       env:
         CIBW_ARCHS: "${{ matrix.arch }}"
         CIBW_SKIP: "${{ matrix.skip }}"
-        CIBW_ENVIRONMENT: 'CMAKE_OSX_ARCHITECTURES="${{ matrix.cmake_osx_architectures }}"'
 
     - uses: actions/upload-artifact@v3
       if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
