@@ -29,14 +29,6 @@ def get_version():
         else:
             return f"{parsed['CLANG_FORMAT_VERSION']}.{parsed['CLANG_FORMAT_WHEEL_VERSION']}"
 
-def get_cmake_args_from_env():
-    cmake_args = []
-    for cmake_arg in ["CMAKE_OSX_ARCHITECTURES"]:
-        cmake_arg_value = os.environ.get(cmake_arg)
-        if cmake_arg_value:
-            cmake_args.append(f"-D{cmake_arg}={cmake_arg_value}")
-    return cmake_args
-
 # Parse the given README file
 with open("README.md", "r") as readme_file:
     readme = readme_file.read()
@@ -75,5 +67,4 @@ setup(
         "Topic :: Software Development :: Quality Assurance",
     ],
     license="Apache 2.0",
-    cmake_args=get_cmake_args_from_env(),
 )
