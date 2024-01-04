@@ -87,9 +87,10 @@ jobs:
         CIBW_ARCHS: "${{ matrix.arch }}"
         CIBW_SKIP: "${{ matrix.skip }}"
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
       with:
+        name: artifacts-wheels-${{ strategy.job-index }}
         path: ./wheelhouse/*.whl
 
   build-sdist:
@@ -108,8 +109,9 @@ jobs:
       - name: Build SDist
         run: pipx run build --sdist
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
+          name: artifacts-sdist
           path: dist/*.tar.gz
   
   test-sdist:
@@ -125,9 +127,9 @@ jobs:
         with:
           python-version: '3.9'
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
-          name: artifact
+          name: artifacts-sdist
           path: sdist
 
       - name: Install from SDist
@@ -156,9 +158,10 @@ jobs:
     if: github.repository_owner == 'ssciwr'
 
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
-          name: artifact
+          pattern: artifacts-*
+          merge-multiple: true
           path: dist
 
       - name: Upload to PyPI
