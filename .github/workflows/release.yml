@@ -29,30 +29,31 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
+      fail-fast: false
       matrix:
         arch: ["aarch64", "ppc64le", "s390x", "x86_64", "i686"]
         skip: ["*manylinux*", "*musllinux*"]
         include:
           # initially generate all 10 matrix combinations with qemu on ubuntu:
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             use_qemu: true
           # modify the x86_64 and i686 jobs generated above to disable qemu
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             arch: "x86_64"
             use_qemu: false
-          - os: ubuntu-20.04
+          - os: ubuntu-latest
             arch: "i686"
             use_qemu: false
           # additional runs (they define skip="" to ensure they cannot be combined with any matrix combinations)
-          - os: windows-2019
+          - os: windows-latest
             arch: "AMD64"
             use_qemu: false
             skip: ""
-          - os: windows-2019
+          - os: windows-latest
             arch: "x86"
             use_qemu: false
             skip: ""
-          - os: macos-11
+          - os: macos-latest
             arch: "x86_64"
             use_qemu: false
             skip: ""
@@ -73,8 +74,8 @@ jobs:
     - name: Override LLVM version (${{ github.event.inputs.llvm_version }})
       if: github.event.inputs.llvm_version
       run: |
-        echo "set(CLANG_FORMAT_VERSION ${{ github.event.inputs.llvm_version }})" > clang-format_version.cmake
-        echo "set(CLANG_FORMAT_WHEEL_VERSION ${{ github.event.inputs.wheel_version }})" >> clang-format_version.cmake
+        echo "${{ github.event.inputs.llvm_version }}.${{ github.event.inputs.wheel_version }}" > clang-format_version.txt
+        cat clang-format_version.txt
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3.0.0
@@ -95,7 +96,7 @@ jobs:
 
   build-sdist:
     name: Build source distribution
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -103,8 +104,8 @@ jobs:
       - name: Override LLVM version (${{ github.event.inputs.llvm_version }})
         if: github.event.inputs.llvm_version
         run: |
-          echo "set(CLANG_FORMAT_VERSION ${{ github.event.inputs.llvm_version }})" > clang-format_version.cmake
-          echo "set(CLANG_FORMAT_WHEEL_VERSION ${{ github.event.inputs.wheel_version }})" >> clang-format_version.cmake
+          echo "${{ github.event.inputs.llvm_version }}.${{ github.event.inputs.wheel_version }}" > clang-format_version.txt
+          cat clang-format_version.txt
  
       - name: Build SDist
         run: pipx run build --sdist
@@ -117,7 +118,7 @@ jobs:
   test-sdist:
     name: Test build from source distribution
     needs: [build-sdist]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -152,7 +153,7 @@ jobs:
   upload_pypi:
     name: Upload to PyPI
     needs: [build-wheels, build-sdist, test-sdist]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
     if: github.repository_owner == 'ssciwr'

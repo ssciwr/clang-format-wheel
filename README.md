@@ -38,7 +38,8 @@ The [clang-format-wheel repository](https://github.com/ssciwr/clang-format-wheel
 
 In order to add a new release, the following steps are necessary:
 
-* Edit the [version file](https://github.com/ssciwr/clang-format-wheel/blob/main/clang-format_version.cmake) to reflect the new version.
+* Edit the [version file](https://github.com/ssciwr/clang-format-wheel/blob/main/clang-format_version.txt)
+  * In the form `llvm_version.wheel_version`, e.g. `18.0.2.1`
 * Make a GitHub release to trigger the [GitHub Actions release workflow](https://github.com/ssciwr/clang-format-wheel/actions/workflows/release.yml). Alternatively, the workflow can be triggered manually.
 
 On manual triggers, the following input variables are available:
@@ -54,7 +55,7 @@ The repository with the precommit hook is automatically updated using a schedule
 This repository extends the great work of several other projects:
 
 * `clang-format` itself is [provided by the LLVM project](https://github.com/llvm/llvm-project) under the Apache 2.0 License with LLVM exceptions.
-* The build logic is based on [scikit-build](https://github.com/scikit-build/scikit-build) which greatly reduces the amount of low level code necessary to package `clang-format`.
+* The build logic is based on [scikit-build-core](https://github.com/scikit-build/scikit-build-core) which greatly reduces the amount of low level code necessary to package `clang-format`.
 * The `scikit-build` packaging examples of [CMake](https://github.com/scikit-build/cmake-python-distributions) and [Ninja](https://github.com/scikit-build/ninja-python-distributions) were very helpful in packaging `clang-format`.
 * The CI build process is controlled by [cibuildwheel](https://github.com/pypa/cibuildwheel) which makes building wheels across a number of platforms a pleasant experience (!)
 

@@ -1,13 +1,52 @@
 [build-system]
-requires = ["setuptools>=42", "wheel", "scikit-build", "cmake>=3.16", "ninja; platform_system!='Windows'"]
+requires = ["scikit-build-core"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "clang-format-wheel"
+dynamic = ["version"]
+authors = [{name = "Dominic Kempf", email = "ssc@iwr.uni-heidelberg.de"}]
+license = { text = "Apache 2.0" }
+description = "Clang-Format is an LLVM-based code formatting tool"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: C",
+    "Programming Language :: C++",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: Apache Software License",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Quality Assurance",
+]
+
+[tool.scikit-build.metadata.version]
+provider = "scikit_build_core.metadata.regex"
+regex = '^(?P<value>\d+\.\d+\.\d+(\.[1-9]\d*)?)'
+input = "clang-format_version.txt"
+
+[project.urls]
+Clang = "http://clang.llvm.org/"
+Documentation = "https://clang.llvm.org/docs/ClangFormat.html"
+Download = "https://github.com/llvm/llvm-project/releases"
+Source = "https://github.com/ssciwr/clang-format-wheel"
+
+[project.scripts]
+"clang-format" = "clang_format:clang_format"
+"git-clang-format" = "clang_format.git_clang_format:main"
+"clang-format-diff.py" = "clang_format.clang_format_diff:main"
+
+[tool.scikit-build]
+wheel.packages = ["clang_format"]
+wheel.py-api = "py2.py3"
+cmake.version = ">=3.16.0"
+ninja.version = ">=1.10.0"
+cmake.verbose = true
+logging.level = "INFO"
 
 [tool.cibuildwheel]
 # Super-verbose output for debugging purpose
 build-verbosity = 3
 
-# We restrict ourselves to CPython 3.9 and then repair the wheels to be
-# independent of the Python version - I have not found a different solution
-# within cibuildwheel to achieve this.
+# restrict to a single Python version as wheel does not depend on Python
 build = "cp39-*"
 
 # Testing commands for our wheels
