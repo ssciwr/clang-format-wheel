@@ -35,7 +35,6 @@ Source = "https://github.com/ssciwr/clang-format-wheel"
 "clang-format-diff.py" = "clang_format.clang_format_diff:main"
 
 [tool.scikit-build]
-wheel.packages = ["clang_format"]
 wheel.py-api = "py2.py3"
 cmake.version = ">=3.16.0"
 ninja.version = ">=1.10.0"
@@ -45,6 +44,8 @@ logging.level = "DEBUG"
 [tool.cibuildwheel]
 # Super-verbose output for debugging purpose
 build-verbosity = 3
+# Set CMAKE_GENERATOR env var which is respected by scikit-build-core to use Ninja on all platforms
+environment = "CMAKE_GENERATOR=Ninja"
 
 # restrict to a single Python version as wheel does not depend on Python
 build = "cp39-*"

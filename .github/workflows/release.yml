@@ -4,8 +4,6 @@ on: push
 
 env:
   USE_QEMU: ${{ github.event.inputs.use_qemu == 'true' }}
-  CMAKE_BUILD_PARALLEL_LEVEL: 4
-  CMAKE_GENERATOR: Ninja
 
 jobs:
   build-wheels:
