@@ -22,7 +22,7 @@ ExternalProject_add(build-clang-format
   BUILD_COMMAND ${CMAKE_COMMAND} --build . --target clang-format --config Release
 )
 set(config-subfolder "")
-if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+if(CMAKE_GENERATOR MATCHES "Visual Studio")
   set(config-subfolder "Release")
 endif()
 set(clang-format-executable ${CMAKE_BINARY_DIR}/llvm/${config-subfolder}/bin/clang-format${CMAKE_EXECUTABLE_SUFFIX})

@@ -22,7 +22,6 @@ on:
 
 env:
   USE_QEMU: ${{ github.event.inputs.use_qemu == 'true' }}
-  CMAKE_BUILD_PARALLEL_LEVEL: 4
 
 jobs:
   build-wheels:
@@ -70,6 +69,12 @@ jobs:
     - name: Support long paths
       if: runner.os == 'Windows' && ((!matrix.use_qemu) || fromJSON(env.USE_QEMU))
       run: git config --system core.longpaths true
+
+    - name: Set up msvc on Windows
+      if: runner.os == 'Windows'
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: ${{ matrix.arch }}
 
     - name: Override LLVM version (${{ github.event.inputs.llvm_version }})
       if: github.event.inputs.llvm_version

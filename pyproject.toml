@@ -40,11 +40,13 @@ wheel.py-api = "py2.py3"
 cmake.version = ">=3.16.0"
 ninja.version = ">=1.10.0"
 cmake.verbose = true
-logging.level = "INFO"
+logging.level = "DEBUG"
 
 [tool.cibuildwheel]
 # Super-verbose output for debugging purpose
 build-verbosity = 3
+# Set CMAKE_GENERATOR env var which is respected by scikit-build-core to use Ninja on all platforms
+environment = "CMAKE_GENERATOR=Ninja"
 
 # restrict to a single Python version as wheel does not depend on Python
 build = "cp39-*"
