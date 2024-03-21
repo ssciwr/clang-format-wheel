@@ -32,6 +32,12 @@ jobs:
       if: runner.os == 'Windows' && ((!matrix.use_qemu) || fromJSON(env.USE_QEMU))
       run: git config --system core.longpaths true
 
+    - name: Set up msvc on windows
+      if: runner.os == 'Windows'
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: ${{ matrix.arch }}
+
     - name: Override LLVM version (${{ github.event.inputs.llvm_version }})
       if: github.event.inputs.llvm_version
       run: |
