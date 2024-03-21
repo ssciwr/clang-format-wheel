@@ -42,9 +42,6 @@ ninja.version = ">=1.10.0"
 cmake.verbose = true
 logging.level = "INFO"
 
-[tool.scikit-build.cmake.define]
-CMAKE_GENERATOR = "Ninja"
-
 [tool.cibuildwheel]
 # Super-verbose output for debugging purpose
 build-verbosity = 3
