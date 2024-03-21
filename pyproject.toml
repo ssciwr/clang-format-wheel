@@ -3,7 +3,7 @@ requires = ["scikit-build-core"]
 build-backend = "scikit_build_core.build"
 
 [project]
-name = "clang-format-wheel"
+name = "clang-format"
 dynamic = ["version"]
 authors = [{name = "Dominic Kempf", email = "ssc@iwr.uni-heidelberg.de"}]
 license = { text = "Apache 2.0" }
