@@ -52,12 +52,11 @@ jobs:
             arch: "x86"
             use_qemu: false
             skip: ""
-          - os: macos-latest
+          - os: macos-13
             arch: "x86_64"
             use_qemu: false
             skip: ""
-            # SSC self-hosted mac arm64 runner
-          - os: macos-arm64-ssc
+          - os: macos-14
             arch: "arm64"
             use_qemu: false
             skip: ""
