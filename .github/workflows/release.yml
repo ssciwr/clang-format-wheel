@@ -25,13 +25,13 @@ env:
 
 jobs:
   build-wheels:
-    name: "${{ matrix.os }} :: ${{ matrix.arch }} (skip: ${{ matrix.skip }})"
+    name: "${{ matrix.os }} :: ${{ matrix.platform }}-${{ matrix.arch }}"
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         arch: ["aarch64", "ppc64le", "s390x", "x86_64", "i686"]
-        skip: ["*manylinux*", "*musllinux*"]
+        platform: ["manylinux", "musllinux"]
         include:
           # initially generate all 10 matrix combinations with qemu on ubuntu:
           - os: ubuntu-latest
@@ -43,23 +43,23 @@ jobs:
           - os: ubuntu-latest
             arch: "i686"
             use_qemu: false
-          # additional runs (they define skip="" to ensure they cannot be combined with any matrix combinations)
+          # additional runs
           - os: windows-latest
+            platform: "win"
             arch: "AMD64"
             use_qemu: false
-            skip: ""
           - os: windows-latest
+            platform: "win"
             arch: "x86"
             use_qemu: false
-            skip: ""
           - os: macos-13
+            platform: "macos"
             arch: "x86_64"
             use_qemu: false
-            skip: ""
           - os: macos-14
+            platform: "macos"
             arch: "arm64"
             use_qemu: false
-            skip: ""
 
     steps:
     - uses: actions/checkout@v4
@@ -90,12 +90,13 @@ jobs:
       if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
       env:
         CIBW_ARCHS: "${{ matrix.arch }}"
-        CIBW_SKIP: "${{ matrix.skip }}"
+        # restrict to a single Python version as wheel does not depend on Python:
+        CIBW_BUILD: "cp311-${{ matrix.platform }}*"
 
     - uses: actions/upload-artifact@v4
       if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
       with:
-        name: artifacts-wheels-${{ strategy.job-index }}
+        name: artifacts-wheels-${{ matrix.platform }}-${{ matrix.arch }}
         path: ./wheelhouse/*.whl
 
   build-sdist:
@@ -177,4 +178,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@v1.8.14
         if: github.event.inputs.deploy_to_testpypi == 'true'
         with:
-          repository_url: https://test.pypi.org/legacy/
+          repository-url: https://test.pypi.org/legacy/

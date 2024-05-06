@@ -48,9 +48,6 @@ build-verbosity = 3
 # Set CMAKE_GENERATOR env var which is respected by scikit-build-core to use Ninja on all platforms
 environment = "CMAKE_GENERATOR=Ninja"
 
-# restrict to a single Python version as wheel does not depend on Python
-build = "cp39-*"
-
 # Testing commands for our wheels
 before-test = [
     "git config --global user.name Name",
