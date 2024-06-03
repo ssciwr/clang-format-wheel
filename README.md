@@ -40,7 +40,10 @@ In order to add a new release, the following steps are necessary:
 
 * Edit the [version file](https://github.com/ssciwr/clang-format-wheel/blob/main/clang-format_version.txt)
   * In the form `llvm_version.wheel_version`, e.g. `18.0.2.1`
-* Make a GitHub release to trigger the [GitHub Actions release workflow](https://github.com/ssciwr/clang-format-wheel/actions/workflows/release.yml). Alternatively, the workflow can be triggered manually.
+* Tag the commit with this version to trigger the [GitHub Actions release workflow](https://github.com/ssciwr/clang-format-wheel/actions/workflows/release.yml)
+  * e.g. `git tag v18.0.2.1 && git push origin v18.0.2.1`
+
+Alternatively, the workflow can be triggered manually:
 
 On manual triggers, the following input variables are available:
 * `use_qemu`: Whether to build targets that require emulation (default: `true`)
