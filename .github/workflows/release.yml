@@ -2,15 +2,11 @@ name: Build + Release Wheels
 
 on:
   push:
-    tags:
-      - 'v?[0-9]+.[0-9]+.[0-9]+'
-      - 'v?[0-9]+.[0-9]+.[0-9]+.[0-9]+'
+    # tags:
+    #   - 'v?[0-9]+.[0-9]+.[0-9]+'
+    #   - 'v?[0-9]+.[0-9]+.[0-9]+.[0-9]+'
   workflow_dispatch:
     inputs:
-      use_qemu:
-        description: "Use qemu for builds with targets requiring emulation"
-        required: true
-        default: true
       llvm_version:
         description: "LLVM version to build"
         required: false
@@ -19,13 +15,14 @@ on:
         description: "Version of the wheel packaging (appended to LLVM version)"
         required: false
         default: "0"
+      skip_emulation:
+        description: "Skip builds with targets requiring specified emulation"
+        required: true
+        default: qemu
       deploy_to_testpypi:
         description: "Whether the build should be deployed to test.pypi.org instead regular PyPI"
         required: true
         default: false
-
-env:
-  USE_QEMU: ${{ github.event.inputs.use_qemu == 'true' }}
 
 jobs:
   build-wheels:
@@ -34,43 +31,57 @@ jobs:
 
     strategy:
       matrix:
-        arch: ["aarch64", "ppc64le", "s390x", "x86_64", "i686"]
+        # emulated linux: generate 6 matrix combinations with qemu on ubuntu:
+        arch: ["aarch64", "ppc64le", "s390x"]
         platform: ["manylinux", "musllinux"]
+        os: [ubuntu-latest]
+        emulation: ["qemu"]
+        exclude:
+          # conditionally skip jobs requiring emulation:
+          - os: ubuntu-latest
+            emulation: ${{ github.event.inputs.skip_emulation }}
         include:
-          # initially generate all 10 matrix combinations with qemu on ubuntu:
+          # linux
           - os: ubuntu-latest
-            use_qemu: true
-          # modify the x86_64 and i686 jobs generated above to disable qemu
-          - os: ubuntu-latest
+            platform: "manylinux"
             arch: "x86_64"
-            use_qemu: false
+            emulation: ""
           - os: ubuntu-latest
+            platform: "manylinux"
             arch: "i686"
-            use_qemu: false
-          # additional runs
+            emulation: ""
+          - os: ubuntu-latest
+            platform: "musllinux"
+            arch: "x86_64"
+            emulation: ""
+          - os: ubuntu-latest
+            platform: "musllinux"
+            arch: "i686"
+            emulation: ""
+          # windows
           - os: windows-latest
             platform: "win"
             arch: "AMD64"
-            use_qemu: false
+            emulation: ""
           - os: windows-latest
             platform: "win"
             arch: "x86"
-            use_qemu: false
+            emulation: ""
+          # macos
           - os: macos-13
             platform: "macos"
             arch: "x86_64"
-            use_qemu: false
-          - os: macos-14
+            emulation: ""
+          - os: macos-latest
             platform: "macos"
             arch: "arm64"
-            use_qemu: false
+            emulation: ""
 
     steps:
     - uses: actions/checkout@v4
-      if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
     
-    - name: Support long paths
-      if: runner.os == 'Windows' && ((!matrix.use_qemu) || fromJSON(env.USE_QEMU))
+    - name: Support long paths on Windows
+      if: runner.os == 'Windows'
       run: git config --system core.longpaths true
 
     - name: Set up msvc on Windows
@@ -87,18 +98,16 @@ jobs:
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3.0.0
-      if: runner.os == 'Linux' && ((matrix.use_qemu) && fromJSON(env.USE_QEMU))
+      if: runner.os == 'Linux' && matrix.emulation == 'qemu'
 
     - name: Build wheels
       uses: pypa/cibuildwheel@v2.18
-      if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
       env:
         CIBW_ARCHS: "${{ matrix.arch }}"
         # restrict to a single Python version as wheel does not depend on Python:
         CIBW_BUILD: "cp311-${{ matrix.platform }}*"
 
     - uses: actions/upload-artifact@v4
-      if: (!matrix.use_qemu) || fromJSON(env.USE_QEMU)
       with:
         name: artifacts-wheels-${{ matrix.platform }}-${{ matrix.arch }}
         path: ./wheelhouse/*.whl
@@ -159,32 +168,32 @@ jobs:
         run:
           python -m pytest
 
-  upload_pypi:
-    name: Upload to PyPI
-    needs: [build-wheels, build-sdist, test-sdist]
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: write
-    if: github.repository_owner == 'ssciwr'
+  # upload_pypi:
+  #   name: Upload to PyPI
+  #   needs: [build-wheels, build-sdist, test-sdist]
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     id-token: write
+  #     contents: write
+  #   if: github.repository_owner == 'ssciwr'
 
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: artifacts-*
-          merge-multiple: true
-          path: dist
+  #   steps:
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         pattern: artifacts-*
+  #         merge-multiple: true
+  #         path: dist
 
-      - name: Upload to PyPI
-        uses: pypa/gh-action-pypi-publish@v1.8.14
-        if: github.event.inputs.deploy_to_testpypi == 'false'
+  #     - name: Upload to PyPI
+  #       uses: pypa/gh-action-pypi-publish@v1.8.14
+  #       if: github.event.inputs.deploy_to_testpypi == 'false'
 
-      - name: Upload to TestPyPI
-        uses: pypa/gh-action-pypi-publish@v1.8.14
-        if: github.event.inputs.deploy_to_testpypi == 'true'
-        with:
-          repository-url: https://test.pypi.org/legacy/
+  #     - name: Upload to TestPyPI
+  #       uses: pypa/gh-action-pypi-publish@v1.8.14
+  #       if: github.event.inputs.deploy_to_testpypi == 'true'
+  #       with:
+  #         repository-url: https://test.pypi.org/legacy/
 
-      - name: GitHub release for tagged commits
-        uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
+  #     - name: GitHub release for tagged commits
+  #       uses: softprops/action-gh-release@v2
+  #       if: startsWith(github.ref, 'refs/tags/')
