@@ -55,10 +55,10 @@ jobs:
             platform: "musllinux"
             arch: "i686"
           # windows
-          - os: windows-latest
+          - os: windows-2019
             platform: "win"
             arch: "AMD64"
-          - os: windows-latest
+          - os: windows-2019
             platform: "win"
             arch: "x86"
           # macos
