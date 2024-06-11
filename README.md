@@ -46,9 +46,9 @@ In order to add a new release, the following steps are necessary:
 Alternatively, the workflow can be triggered manually:
 
 On manual triggers, the following input variables are available:
-* `use_qemu`: Whether to build targets that require emulation (default: `true`)
 * `llvm_version`: Override the LLVM version (default: `""`)
 * `wheel_version`: Override the wheel packaging version (default `"0"`)
+* `skip_emulation`: Set which emulation builds to skip, e.g. `"qemu"` (default: `"""`)
 * `deploy_to_testpypi`: Whether to deploy to TestPyPI instead of PyPI (default: `false`)
 
 The repository with the precommit hook is automatically updated using a scheduled Github Actions workflow.
