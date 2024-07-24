@@ -10,11 +10,11 @@ on:
       llvm_version:
         description: "LLVM version to build"
         required: false
-        default: ""
+        default: "18.1.8"
       wheel_version:
         description: "Version of the wheel packaging (appended to LLVM version)"
         required: false
-        default: "0"
+        default: "1"
       skip_emulation:
         description: "Emulation builds to skip (e.g. qemu)"
         required: false
