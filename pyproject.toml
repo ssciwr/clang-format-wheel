@@ -3,9 +3,9 @@ requires = ["scikit-build-core"]
 build-backend = "scikit_build_core.build"
 
 [project]
-name = "clang-format"
+name = "pmi-clang-format"
 dynamic = ["version"]
-authors = [{name = "Dominic Kempf", email = "ssc@iwr.uni-heidelberg.de"}]
+authors = [{name = "Walid Boussafa", email = "walid.boussafa@outlook.com"}]
 license = { text = "Apache 2.0" }
 description = "Clang-Format is an LLVM-based code formatting tool"
 readme = "README.md"

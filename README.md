@@ -1,11 +1,11 @@
-# clang-format Python distribution
+# pmi-clang-format Python distribution
 
 [![PyPI Release](https://img.shields.io/pypi/v/clang-format.svg)](https://pypi.org/project/clang-format)
 
 This project packages the `clang-format` utility as a Python package. It allows you to install `clang-format` directly from PyPI:
 
 ```
-python -m pip install clang-format
+python -m pip install pmi-clang-format
 ```
 
 This projects intends to release a new PyPI package for each major and minor release of `clang-format`.
@@ -34,13 +34,13 @@ It is best to subscribe to releases of the hook repository to get notified of ne
 
 ## Building new releases
 
-The [clang-format-wheel repository](https://github.com/ssciwr/clang-format-wheel) provides the logic to build and publish binary wheels of the `clang-format` utility.
+The [clang-format-wheel repository](https://github.com/boussaffawalid/clang-format-wheel) provides the logic to build and publish binary wheels of the `clang-format` utility.
 
 In order to add a new release, the following steps are necessary:
 
-* Edit the [version file](https://github.com/ssciwr/clang-format-wheel/blob/main/clang-format_version.txt)
+* Edit the [version file](https://github.com/boussaffawalid/clang-format-wheel/blob/main/clang-format_version.txt)
   * In the form `llvm_version.wheel_version`, e.g. `18.0.2.1`
-* Tag the commit with this version to trigger the [GitHub Actions release workflow](https://github.com/ssciwr/clang-format-wheel/actions/workflows/release.yml)
+* Tag the commit with this version to trigger the [GitHub Actions release workflow](https://github.com/boussaffawalid/clang-format-wheel/actions/workflows/release.yml)
   * e.g. `git tag v18.0.2.1 && git push origin v18.0.2.1`
 
 Alternatively, the workflow can be triggered manually:

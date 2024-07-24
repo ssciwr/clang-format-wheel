@@ -18,7 +18,7 @@ on:
       skip_emulation:
         description: "Emulation builds to skip (e.g. qemu)"
         required: false
-        default: ""
+        default: "qemu"
       deploy_to_testpypi:
         description: "Whether the build should be deployed to test.pypi.org instead regular PyPI"
         required: true
@@ -167,7 +167,7 @@ jobs:
     permissions:
       id-token: write
       contents: write
-    if: github.repository_owner == 'ssciwr'
+    if: github.repository_owner == 'boussaffawalid'
 
     steps:
       - uses: actions/download-artifact@v4
