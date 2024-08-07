@@ -27,24 +27,51 @@ def pmi_post_format(files):
 
 
 def fix_pmi_macros_formatting(file_path):
-    patterns = ["ree;", "rrr;", "nee;", "co_ree;"]
+    patterns = [
+        "ree;",
+        "co_ree;",
+        "eee_absorb;",
+        "nee;",
+        "rrr;",
+        "co_ree;",
+        "ree_silent;",
+        "co_ree_silent;",
+        "e_result(",
+        "co_e_result(",
+        "e_result_silent(",
+        "co_e_result_silent(",
+        "e_return(",
+        "co_e_return(",
+        "e_return_silent(",
+        "co_e_return_silent(",
+        "e_obj_exec(",
+        "e_result_return(",
+        "co_e_result_return(",
+        "nee_result(",
+        "e_err(",
+        "co_e_err(",
+        "e_exec(",
+        "e_result_return_silent(",
+        "co_e_result_return_silent(",
+    ]
+
     try:
         with open(file_path, "r") as file:
             lines = file.readlines()
 
         updated_lines = []
-        for i in range(len(lines)):
+        for i, line in enumerate(lines):
             if (
                 i > 0
-                and (lines[i].strip() in patterns)
+                and any(line.strip().startswith(pattern) for pattern in patterns)
                 and lines[i - 1].endswith(";\n")
             ):
                 # Combine the previous line with the current line
                 updated_lines[-1] = (
-                    updated_lines[-1].rstrip() + " " + lines[i].strip() + "\n"
+                    updated_lines[-1].rstrip() + " " + line.strip() + "\n"
                 )
             else:
-                updated_lines.append(lines[i])
+                updated_lines.append(line)
 
         with open(file_path, "w") as file:
             file.writelines(updated_lines)
