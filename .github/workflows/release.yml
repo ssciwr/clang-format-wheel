@@ -14,7 +14,7 @@ on:
       wheel_version:
         description: "Version of the wheel packaging (appended to LLVM version)"
         required: false
-        default: "1"
+        default: "2"
       skip_emulation:
         description: "Emulation builds to skip (e.g. qemu)"
         required: false
