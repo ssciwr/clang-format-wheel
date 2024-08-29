@@ -20,7 +20,7 @@ classifiers = [
 
 [tool.scikit-build.metadata.version]
 provider = "scikit_build_core.metadata.regex"
-regex = '^(?P<value>\d+\.\d+\.\d+(\.[1-9]\d*)?)'
+regex = '^(?P<value>\d+\.\d+\.\d+[-\w]*(\.[1-9]\d*)?)'
 input = "clang-format_version.txt"
 
 [project.urls]

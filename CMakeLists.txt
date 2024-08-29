@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16...3.29)
 project(${SKBUILD_PROJECT_NAME} VERSION ${SKBUILD_PROJECT_VERSION})
 
 message(STATUS "clang-format-wheel version: ${SKBUILD_PROJECT_VERSION}")
-string(REGEX MATCH "^([0-9]+)\.([0-9]+)\.([0-9]+)" CLANG_FORMAT_VERSION "${SKBUILD_PROJECT_VERSION}")
+string(REGEX MATCH "^([0-9]+)\.([0-9]+)\.([0-9]+)[-\w]*" CLANG_FORMAT_VERSION "${SKBUILD_PROJECT_VERSION}")
 message(STATUS "clang-format version: ${CLANG_FORMAT_VERSION}")
 
 # Define a build rule clang-format
