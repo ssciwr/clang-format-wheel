@@ -5,6 +5,13 @@ import subprocess
 import tempfile
 
 
+@pytest.fixture
+def repo(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    subprocess.run("git init", shell=True)
+    return tmp_path
+
+
 @pytest.mark.parametrize("testcase", [("helloworld.cc", "helloworld_format.cc")])
 def test_clang_format(testcase):
     # Get full paths to the test data
@@ -21,14 +28,14 @@ def test_clang_format(testcase):
         assert filecmp.cmp(outname, test_output)
 
 
-def test_git_clang_format(git_repo):
+def test_git_clang_format(repo):
     # Test whether the git-clang-format tool is properly executable
     # on an empty git repository.
 
     # Create a commit with an empty file
-    open(os.path.join(git_repo.workspace, "test"), "w").close()
-    git_repo.run("git add test")
-    git_repo.run("git commit -m initial")
+    open(repo / "test", "w").close()
+    subprocess.run("git add test", shell=True)
+    subprocess.run("git commit -m initial", shell=True)
 
     # Check that the clang-format tool runs on the test repo
-    git_repo.run("git clang-format")
+    subprocess.run("git clang-format", shell=True)
