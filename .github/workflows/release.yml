@@ -31,8 +31,8 @@ jobs:
 
     strategy:
       matrix:
-        # emulated linux: generate 6 matrix combinations with qemu on ubuntu:
-        arch: ["aarch64", "ppc64le", "s390x"]
+        # emulated linux: generate 4 matrix combinations with qemu on ubuntu:
+        arch: ["ppc64le", "s390x"]
         platform: ["manylinux", "musllinux"]
         os: [ubuntu-latest]
         emulation: ["qemu"]
@@ -48,12 +48,18 @@ jobs:
           - os: ubuntu-latest
             platform: "manylinux"
             arch: "i686"
+          - os: ubuntu-24.04-arm
+            platform: "manylinux"
+            arch: "aarch64"
           - os: ubuntu-latest
             platform: "musllinux"
             arch: "x86_64"
           - os: ubuntu-latest
             platform: "musllinux"
             arch: "i686"
+          - os: ubuntu-24.04-arm
+            platform: "musllinux"
+            arch: "aarch64"
           # windows
           - os: windows-2019
             platform: "win"
