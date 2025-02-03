@@ -39,11 +39,11 @@ wheel.packages = ["clang_format"]
 wheel.py-api = "py2.py3"
 cmake.version = ">=3.16.0"
 ninja.version = ">=1.10.0"
-cmake.verbose = true
+build.verbose = true
 logging.level = "DEBUG"
 
 [dependency-groups]
-dev = ["pytest"]
+dev = ["pytest", "pytest-git"]
 
 [tool.cibuildwheel]
 # Super-verbose output for debugging purpose
@@ -52,9 +52,9 @@ build-verbosity = 3
 environment = "CMAKE_GENERATOR=Ninja"
 
 # Testing commands for our wheels
+test-groups = ["dev"]
 before-test = [
     "git config --global user.name Name",
     "git config --global user.email foo@bar.com"
 ]
-test-requires = ["pytest", "pytest-git"]
 test-command = "pytest {package}/test"
