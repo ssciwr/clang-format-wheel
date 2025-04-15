@@ -67,6 +67,9 @@ jobs:
           - os: windows-2019
             platform: "win"
             arch: "x86"
+          - os: windows-11-arm
+            platform: "win"
+            arch: "arm64"
           # macos
           - os: macos-13
             platform: "macos"
