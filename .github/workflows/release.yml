@@ -91,6 +91,12 @@ jobs:
       with:
         arch: ${{ matrix.arch }}
 
+    - name: Remove strip binaries on arm64 windows runner to avoid "file format not recognized" error when running strip
+      if: matrix.platform == 'win' && matrix.arch == 'ARM64'
+      run: |
+        rm C:\mingw64\bin\strip.exe
+        rm C:\Strawberry\c\bin\strip.exe
+
     - name: Override LLVM version (${{ github.event.inputs.llvm_version }})
       if: github.event.inputs.llvm_version
       run: |
