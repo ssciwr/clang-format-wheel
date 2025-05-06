@@ -69,7 +69,7 @@ jobs:
             arch: "x86"
           - os: windows-11-arm
             platform: "win"
-            arch: "arm64"
+            arch: "ARM64"
           # macos
           - os: macos-13
             platform: "macos"
