@@ -14,8 +14,9 @@ def repo(tmp_path, monkeypatch):
     return tmp_path
 
 
+@pytest.mark.parametrize("command", ["clang-format", clang_format.get_executable('clang-format')])
 @pytest.mark.parametrize("testcase", [("helloworld.cc", "helloworld_format.cc")])
-def test_clang_format(testcase):
+def test_clang_format(command, testcase):
     # Get full paths to the test data
     test_input, test_output = testcase
     test_input = os.path.join(os.path.dirname(__file__), test_input)
@@ -24,7 +25,7 @@ def test_clang_format(testcase):
     with tempfile.TemporaryDirectory() as tmp:
         outname = os.path.join(tmp, "formatted")
         with open(outname, "w") as out:
-            subprocess.run(["clang-format", test_input], stdout=out, check=True)
+            subprocess.run([command, test_input], stdout=out, check=True)
 
         # Check that the content is equal
         assert filecmp.cmp(outname, test_output)
