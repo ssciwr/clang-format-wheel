@@ -198,12 +198,15 @@ jobs:
 
       - name: Upload to PyPI
         uses: pypa/gh-action-pypi-publish@v1.12.4
+        with:
+          verbose: true
         if: (startsWith(github.event.ref, 'refs/tags/')) || (github.event.inputs.deploy_to_testpypi == 'false')
 
       - name: Upload to TestPyPI
         uses: pypa/gh-action-pypi-publish@v1.12.4
         if: github.event.inputs.deploy_to_testpypi == 'true'
         with:
+          verbose: true
           repository-url: https://test.pypi.org/legacy/
 
       - name: GitHub release for tagged commits
