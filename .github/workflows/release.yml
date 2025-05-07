@@ -179,7 +179,7 @@ jobs:
       - name: Run test suite
         working-directory: test
         run:
-          python -m pytest --import-mode=importlib
+          python -m pytest --import-mode=importlib -vvv
 
   upload_pypi:
     name: Upload to PyPI

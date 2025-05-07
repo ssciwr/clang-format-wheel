@@ -61,4 +61,4 @@ before-test = [
     "git config --global user.name Name",
     "git config --global user.email foo@bar.com"
 ]
-test-command = "pytest {package}/test"
+test-command = "pytest {package}/test -vvv"
