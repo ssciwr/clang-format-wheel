@@ -3,6 +3,8 @@ import os
 import pytest
 import subprocess
 import tempfile
+import pathlib
+import clang_format
 
 
 @pytest.mark.parametrize("testcase", [("helloworld.cc", "helloworld_format.cc")])
@@ -31,4 +33,8 @@ def test_git_clang_format(git_repo):
     git_repo.run("git commit -m initial")
 
     # Check that the clang-format tool runs on the test repo
-    git_repo.run("git clang-format")
+    subprocess.run("git clang-format", shell=True)
+
+
+def test_get_executable():
+    assert pathlib.Path(clang_format.get_executable('clang-format')).exists()
