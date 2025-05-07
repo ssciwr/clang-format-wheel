@@ -177,8 +177,9 @@ jobs:
           git config --global user.email foo@bar.com
 
       - name: Run test suite
+        working-directory: test
         run:
-          python -m pytest
+          python -m pytest --import-mode=importlib
 
   upload_pypi:
     name: Upload to PyPI

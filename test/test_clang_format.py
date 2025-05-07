@@ -3,6 +3,8 @@ import os
 import pytest
 import subprocess
 import tempfile
+import pathlib
+import clang_format
 
 
 @pytest.fixture
@@ -39,3 +41,9 @@ def test_git_clang_format(repo):
 
     # Check that the clang-format tool runs on the test repo
     subprocess.run("git clang-format", shell=True)
+
+
+def test_get_executable():
+    clang_format_exe = pathlib.Path(clang_format.get_executable('clang-format'))
+    assert clang_format_exe.exists()
+    assert os.access(clang_format_exe, os.X_OK)

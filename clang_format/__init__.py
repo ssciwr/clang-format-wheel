@@ -1,13 +1,14 @@
 import os
 import subprocess
 import sys
+import sysconfig
 
 
-def _get_executable(name):
-    return os.path.join(os.path.dirname(__file__), "data", "bin", name)
+def get_executable(name):
+    return os.path.join(os.path.dirname(__file__), "data", "bin", name + sysconfig.get_config_var("EXE"))
 
 def _run(name):
-    executable = _get_executable(name)
+    executable = get_executable(name)
     return subprocess.call([executable] + sys.argv[1:])
 
 def clang_format():

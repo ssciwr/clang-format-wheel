@@ -45,6 +45,10 @@ logging.level = "DEBUG"
 [dependency-groups]
 dev = ["pytest", "pytest-git"]
 
+[tool.pytest.ini_options]
+# use importlib pytest import mode to avoid adding local directory to sys.path
+addopts = "--import-mode=importlib"
+
 [tool.cibuildwheel]
 # Super-verbose output for debugging purpose
 build-verbosity = 3
