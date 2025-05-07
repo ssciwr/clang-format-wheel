@@ -31,8 +31,8 @@ jobs:
 
     strategy:
       matrix:
-        # emulated linux: generate 6 matrix combinations with qemu on ubuntu:
-        arch: ["aarch64", "ppc64le", "s390x"]
+        # emulated linux: generate 4 matrix combinations with qemu on ubuntu:
+        arch: ["ppc64le", "s390x"]
         platform: ["manylinux", "musllinux"]
         os: [ubuntu-latest]
         emulation: ["qemu"]
@@ -54,6 +54,12 @@ jobs:
           - os: ubuntu-latest
             platform: "musllinux"
             arch: "i686"
+          - os: ubuntu-24.04-arm
+            platform: "manylinux"
+            arch: "aarch64"
+          - os: ubuntu-24.04-arm
+            platform: "musllinux"
+            arch: "aarch64"
           # windows
           - os: windows-2019
             platform: "win"
@@ -61,6 +67,9 @@ jobs:
           - os: windows-2019
             platform: "win"
             arch: "x86"
+          - os: windows-11-arm
+            platform: "win"
+            arch: "ARM64"
           # macos
           - os: macos-13
             platform: "macos"
@@ -82,6 +91,12 @@ jobs:
       with:
         arch: ${{ matrix.arch }}
 
+    - name: Remove strip binaries on arm64 windows runner to avoid "file format not recognized" error when running strip
+      if: matrix.platform == 'win' && matrix.arch == 'ARM64'
+      run: |
+        rm C:\mingw64\bin\strip.exe
+        rm C:\Strawberry\c\bin\strip.exe
+
     - name: Override LLVM version (${{ github.event.inputs.llvm_version }})
       if: github.event.inputs.llvm_version
       run: |
@@ -89,11 +104,13 @@ jobs:
         cat clang-format_version.txt
 
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v3.2.0
+      uses: docker/setup-qemu-action@v3.6.0
+      with:
+        image: tonistiigi/binfmt:qemu-v8.1.5
       if: runner.os == 'Linux' && matrix.emulation == 'qemu'
 
     - name: Build wheels
-      uses: pypa/cibuildwheel@v2.20
+      uses: pypa/cibuildwheel@v2.23
       env:
         CIBW_ARCHS: "${{ matrix.arch }}"
         # restrict to a single Python version as wheel does not depend on Python:
@@ -136,7 +153,9 @@ jobs:
       - uses: actions/setup-python@v5
         name: Install Python
         with:
-          python-version: '3.9'
+          python-version: '3.13'
+
+      - uses: astral-sh/setup-uv@v6
 
       - uses: actions/download-artifact@v4
         with:
@@ -149,7 +168,8 @@ jobs:
 
       - name: Install test requirements
         run:
-          python -m pip install -r requirements-dev.txt
+          # temporary workaround until pip supports installing dependency-groups:
+          uvx dependency-groups dev | xargs python -m pip install
 
       - name: Set up Git identity
         run: |
@@ -177,11 +197,11 @@ jobs:
           path: dist
 
       - name: Upload to PyPI
-        uses: pypa/gh-action-pypi-publish@v1.10.0
+        uses: pypa/gh-action-pypi-publish@v1.12.4
         if: (startsWith(github.event.ref, 'refs/tags/')) || (github.event.inputs.deploy_to_testpypi == 'false')
 
       - name: Upload to TestPyPI
-        uses: pypa/gh-action-pypi-publish@v1.10.0
+        uses: pypa/gh-action-pypi-publish@v1.12.4
         if: github.event.inputs.deploy_to_testpypi == 'true'
         with:
           repository-url: https://test.pypi.org/legacy/
