@@ -44,4 +44,6 @@ def test_git_clang_format(repo):
 
 
 def test_get_executable():
-    assert pathlib.Path(clang_format.get_executable('clang-format')).exists()
+    clang_format_exe = pathlib.Path(clang_format.get_executable('clang-format'))
+    assert clang_format_exe.exists()
+    assert os.access(clang_format_exe, os.X_OK)
