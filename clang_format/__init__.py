@@ -4,7 +4,7 @@ import sys
 
 
 def get_executable(name):
-    return os.path.join(os.path.dirname(__file__), "data", "bin", name)
+    return os.path.join(os.path.dirname(__file__), "data", "bin", name + sysconfig.get_config_var("EXE")) 
 
 def _run(name):
     executable = get_executable(name)
