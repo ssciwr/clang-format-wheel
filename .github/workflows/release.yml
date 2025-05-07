@@ -178,7 +178,7 @@ jobs:
 
       - name: Run test suite
         run:
-          python -m pytest
+          python -m pytest --import-mode=importlib
 
   upload_pypi:
     name: Upload to PyPI
