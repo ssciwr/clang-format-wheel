@@ -31,8 +31,8 @@ jobs:
 
     strategy:
       matrix:
-        # emulated linux: generate 4 matrix combinations with qemu on ubuntu:
-        arch: ["ppc64le", "s390x"]
+        # emulated linux: generate 6 matrix combinations with qemu on ubuntu:
+        arch: ["ppc64le", "s390x", "armv7l"]
         platform: ["manylinux", "musllinux"]
         os: [ubuntu-latest]
         emulation: ["qemu"]
@@ -110,7 +110,7 @@ jobs:
       if: runner.os == 'Linux' && matrix.emulation == 'qemu'
 
     - name: Build wheels
-      uses: pypa/cibuildwheel@v2.23
+      uses: pypa/cibuildwheel@v3.0
       env:
         CIBW_ARCHS: "${{ matrix.arch }}"
         # restrict to a single Python version as wheel does not depend on Python:
