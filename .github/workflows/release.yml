@@ -60,6 +60,12 @@ jobs:
           - os: ubuntu-24.04-arm
             platform: "musllinux"
             arch: "aarch64"
+          - os: ubuntu-24.04-arm
+            platform: "manylinux"
+            arch: "armv7l"
+          - os: ubuntu-24.04-arm
+            platform: "musllinux"
+            arch: "armv7l"
           # windows
           - os: windows-2019
             platform: "win"
@@ -110,7 +116,7 @@ jobs:
       if: runner.os == 'Linux' && matrix.emulation == 'qemu'
 
     - name: Build wheels
-      uses: pypa/cibuildwheel@v2.23
+      uses: pypa/cibuildwheel@v3.0
       env:
         CIBW_ARCHS: "${{ matrix.arch }}"
         # restrict to a single Python version as wheel does not depend on Python:
