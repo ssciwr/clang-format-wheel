@@ -67,10 +67,10 @@ jobs:
             platform: "musllinux"
             arch: "armv7l"
           # windows
-          - os: windows-2019
+          - os: windows-latest
             platform: "win"
             arch: "AMD64"
-          - os: windows-2019
+          - os: windows-latest
             platform: "win"
             arch: "x86"
           - os: windows-11-arm
@@ -161,8 +161,6 @@ jobs:
         with:
           python-version: '3.13'
 
-      - uses: astral-sh/setup-uv@v6
-
       - uses: actions/download-artifact@v4
         with:
           name: artifacts-sdist
@@ -174,8 +172,7 @@ jobs:
 
       - name: Install test requirements
         run:
-          # temporary workaround until pip supports installing dependency-groups:
-          uvx dependency-groups dev | xargs python -m pip install
+          pip install --group dev
 
       - name: Set up Git identity
         run: |
