@@ -201,11 +201,11 @@ jobs:
           path: dist
 
       - name: Upload to PyPI
-        uses: pypa/gh-action-pypi-publish@v1.12.4
+        uses: pypa/gh-action-pypi-publish@v1.13.0
         if: (startsWith(github.event.ref, 'refs/tags/')) || (github.event.inputs.deploy_to_testpypi == 'false')
 
       - name: Upload to TestPyPI
-        uses: pypa/gh-action-pypi-publish@v1.12.4
+        uses: pypa/gh-action-pypi-publish@v1.13.0
         if: github.event.inputs.deploy_to_testpypi == 'true'
         with:
           repository-url: https://test.pypi.org/legacy/
